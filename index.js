@@ -13,11 +13,11 @@ app.use((req, res, next) => {
     console.log('body:', req.body);
     if (req.method === "POST") {
         var bodyFormData = new FormData();
-        for (key in Object.keys(req.body)) {
+        Object.keys(req.body).forEach(key => {
             console.log('-----', key, req.body[key])
             bodyFormData.append(key, req.body[key])
-        }
-        console.log('bodyFormData:', bodyFormData);
+        });
+        // console.log('bodyFormData:', bodyFormData);
         axios
             .post(`${ROOT_API}${req.originalUrl}`, bodyFormData, {
                 headers:{'Content-Type': 'multipart/form-data' }
