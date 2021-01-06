@@ -1,10 +1,47 @@
-const express = require('express')
-const path = require('path')
-const PORT = process.env.PORT || 5000
+const express = require('express');
+const axios = require('axios');
+const PORT = process.env.PORT || 7000;
+const ROOT_API = 'https://b6756000b16d.ngrok.io';
+var app = express();
+var bodyParser = require('body-parser');
 
-express()
-  .use(express.static(path.join(__dirname, 'public')))
-  .set('views', path.join(__dirname, 'views'))
-  .set('view engine', 'ejs')
-  .get('/', (req, res) => res.render('pages/index'))
-  .listen(PORT, () => console.log(`Listening on ${ PORT }`))
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.use((req, res, next) => {
+    console.log('body:', req.body);
+    if (req.method === "POST") {
+        axios
+            .post(`${ROOT_API}${req.originalUrl}`, req.body)
+            .then(_res => {
+                res.json(_res.data)
+            })
+            .catch(error => {
+                console.log(error);
+                res.json({
+                    "response_type": "ephemeral",
+                    "text": "API error!"
+                })
+            });
+    } else {
+        res.json({
+            "response_type": "ephemeral",
+            "text": "API method is not supported!"
+        })
+    }
+});
+
+// var router = express.Router();
+//
+// router.get('/slack/log', function (req, res, next) {
+//     res.send('hello, log api!')
+// });
+
+// app.use(express.static(path.join(__dirname, 'public')));
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'ejs');
+// app.get('/', (req, res) => res.render('pages/index'));
+// app.use('/api', router);
+
+
+app.listen(PORT, () => console.log(`Listening on ${PORT}`));
