@@ -1,7 +1,7 @@
 const express = require('express');
 const axios = require('axios');
 const PORT = process.env.PORT || 7000;
-const ROOT_API = 'https://b6756000b16d.ngrok.io';
+const ROOT_API = 'https://770fe6b535f5.ngrok.io';
 var app = express();
 var bodyParser = require('body-parser');
 
