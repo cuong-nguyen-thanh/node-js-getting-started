@@ -14,6 +14,7 @@ app.use((req, res, next) => {
     if (req.method === "POST") {
         var bodyFormData = new FormData();
         for (key in Object.keys(req.body)) {
+            console.log('-----', key, req.body[key])
             bodyFormData.append(key, req.body[key])
         }
         console.log('bodyFormData:', bodyFormData);
