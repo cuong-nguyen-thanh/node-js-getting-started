@@ -10,14 +10,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
-    console.log('body:', req.body);
     if (req.method === "POST") {
         var bodyFormData = new FormData();
         Object.keys(req.body).forEach(key => {
-            console.log('-----', key, req.body[key]);
             bodyFormData.append(key, req.body[key])
         });
-        // console.log('bodyFormData:', bodyFormData);
         axios
             .post(`${ROOT_API}${req.originalUrl}`, bodyFormData, {
                 headers: bodyFormData.getHeaders()
