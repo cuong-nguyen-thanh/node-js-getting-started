@@ -2,7 +2,7 @@ const FormData = require('form-data');
 const express = require('express');
 const axios = require('axios');
 const PORT = process.env.PORT || 7000;
-const ROOT_API = 'https://6cce84adbfe6.ngrok.io';
+const ROOT_API = 'https://b0ebc98abdf4.ngrok.io';
 var app = express();
 var bodyParser = require('body-parser');
 
